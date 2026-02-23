@@ -1,30 +1,10 @@
-/*
- * Copyright 2022 Mingchun Zhuang (http://me.mczhuang.cn)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.THE
- * SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
+import javax.swing.*;
 
 /**
  * The {@code Game} class manages a game window that enables user to play the game and shows the result window after
@@ -131,7 +111,7 @@ public class Game {
      * @param hashtag    a String holding the hashtag of this game.
      */
     public void playGame(String wordSource, String initWord, String hashtag) {
-        System.out.println("playing Game from word source " + wordSource + " with init word " + initWord + " " +
+        System.out.println("playing Game from word source/jugant eWordle amb el tòpic " + wordSource + " sent la primera paraula " + initWord + " " +
                 hashtag);
         // Initialize related variables.
         int wordLength = initWord.length();
@@ -287,7 +267,7 @@ public class Game {
                                 window.dispose();
                             }
                         } else
-                            messageBoard.setText("Not in word list");
+                            messageBoard.setText("No es troba al llistat");
                     } else
                         messageBoard.setText("Not enough length");
                 }

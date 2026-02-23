@@ -7,9 +7,15 @@ An extended version of [Wordle](http://nytimes.com/games/wordle) (Mini Project o
 + Guess the Wordle word in tries just one more than the word length you selected.
 + Each guess must be a valid word with the length you selected.
 + For each letter you confirm to enter, it will show:
+<<<<<<< HEAD
   + Green if it is in the word and in the correct spot.
     + Yellow if it is in the word but in the wrong spot.
     + Grey if it is not in the word in any spot.
+=======
++ Green if it is in the word and in the correct spot.
++ Yellow if it is in the word but in the wrong spot.
++ Grey if it is not in the word in any spot.
+>>>>>>> fbe1e3366753535781f56161351fd5d91fb35f8b
 
 ### Complie & Run
 
