@@ -19,12 +19,12 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
+import javax.swing.*;
 
 /**
  * The {@code Game} class manages a game window that enables user to play the game and shows the result window after
@@ -131,7 +131,7 @@ public class Game {
      * @param hashtag    a String holding the hashtag of this game.
      */
     public void playGame(String wordSource, String initWord, String hashtag) {
-        System.out.println("playing Game from word source " + wordSource + " with init word " + initWord + " " +
+        System.out.println("playing Game from word source/jugant eWordle amb el tòpic " + wordSource + " sent la primera paraula " + initWord + " " +
                 hashtag);
         // Initialize related variables.
         int wordLength = initWord.length();
@@ -287,7 +287,7 @@ public class Game {
                                 window.dispose();
                             }
                         } else
-                            messageBoard.setText("Not in word list");
+                            messageBoard.setText("No es troba al llistat");
                     } else
                         messageBoard.setText("Not enough length");
                 }
