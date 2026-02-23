@@ -179,8 +179,12 @@ public class Settings {
         errorMessageField.setForeground(Color.RED);
         windowPanel.add(errorMessageField);
         currentHeight += BREAK_HEIGHT;
-        JButton startButton = initButton("Start", WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
+
+        JLabel startButtonTxt = new JLabel("Start"); // Nuevo label
+        startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4,currentHeight, CONTENT_WIDTH / 2, CONTENT_HEIGHT );
+        JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
+        startButton.add(startButtonTxt);
         windowPanel.add(startButton);
     }
 
@@ -218,8 +222,8 @@ public class Settings {
         return Settings.initWord;
     }
 
-    // Setter para que podamos cambiar el valor del InitWord, cuando el usuario le de al boton de Restart o Reiniciar
-    public static void setInitiWord(String initWord) {
+    // Setter para que podamos cambiar el valor del InitWord, cuando el usuario le de al boton de Restart o Reiniciar @ByGamer01
+    public static void setInitWord(String initWord) {
         Settings.initWord = initWord;
     }
 
@@ -290,9 +294,8 @@ public class Settings {
      *                 is pressed.
      * @return a configured JButton.
      */
-    public static JButton initButton(String content, int x, int y, int xSize, int ySize, int fontSize,
-            ActionListener event) {
-        JButton button = new JButton(content);
+    public static JButton initButton(int x, int y, int xSize, int ySize, int fontSize, ActionListener event) {
+        JButton button = new JButton();
         button.setBounds(x, y, xSize, ySize);
         button.setFont(new Font("Comic Sans MS", Font.PLAIN, fontSize));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
