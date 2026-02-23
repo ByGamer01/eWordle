@@ -1,11 +1,10 @@
 
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
+import javax.swing.*;
 
 /**
  * The {@code Results} class manages a result window that enables user to see the result and choose whether to restart
@@ -147,7 +146,11 @@ public class Results {
                 });
         toSettings.setToolTipText("Go back to Preferences page");
         windowPanel.add(toSettings);
-        JButton toRestart = Settings.initButton("Restart",
+
+
+        /*    */
+        
+        JButton toRestart = Settings.initButton("Reiniciar",
                 CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                     Game.createInstance().playGame(Settings.getWordSource(), Settings.getInitWord(),

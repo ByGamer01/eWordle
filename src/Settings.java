@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.function.Consumer;
+import javax.swing.*;
 
 /**
  * The {@code Setting} class manages a setting window that enables user to
@@ -113,7 +114,7 @@ public class Settings {
         Settings.wordSourceOptions = wordSourceOptions;
 
         // Configure window settings.
-        window = new JFrame("Welcome - eWordle");
+        window = new JFrame("Benivingut a - eWordle");
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,7 +125,7 @@ public class Settings {
         windowPanel.setBackground(new Color(238, 238, 238));
         windowPanel.setLayout(null);
 
-        windowPanel.add(Settings.textInit("Preferences", "Comic Sans MS", JTextField.CENTER,
+        windowPanel.add(Settings.textInit("Preferències", "Comic Sans MS", JTextField.CENTER,
                 Font.BOLD, WIDTH_MARGIN, BREAK_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
                 false));
 
@@ -146,21 +147,21 @@ public class Settings {
         windowPanel.add(Settings.textInit("Word Length", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
-        windowPanel.add(initCombo("Word Length: ", wordLengthOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Word Length (Default: " + wordLength + " or last round preference)",
+        windowPanel.add(initCombo("Tamany de paraula", wordLengthOptions, currentHeight + BREAK_HEIGHT,
+                comboEventConsumer, "Tamany de paraula (Predeterminat: " + wordLength + " o preferència del joc anterior)",
                 wordLength + ""));
 
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
         windowPanel.add(Settings.textInit("Word Source", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
-        windowPanel.add(initCombo("Word Source: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Word Source (Default: " + wordSource + " or last round preference)",
+        windowPanel.add(initCombo("Diccionari: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
+                comboEventConsumer, "Diccionari (Predeterminat: " + wordSource + " o preferència del joc anterior)",
                 wordSource));
 
         // Add text field for the user to enter preferred Wordle word.
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
-        windowPanel.add(Settings.textInit("Wordle Word or Hashtag", "", JTextField.LEFT, Font.PLAIN,
+        windowPanel.add(Settings.textInit("Paraula o Hashtag", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
         initWordField = Settings.textInit("", "", JTextField.LEFT, Font.PLAIN, WIDTH_MARGIN,
@@ -168,7 +169,7 @@ public class Settings {
                 true);
         windowPanel.add(initWordField);
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
-        windowPanel.add(Settings.textInit("Hint: Leave empty to guess a random word.", "",
+        windowPanel.add(Settings.textInit("Deixau buit per generar una paraula aleatòria", "",
                 JTextField.LEFT, Font.PLAIN, WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 15,
                 false, false));
 
@@ -179,7 +180,7 @@ public class Settings {
         errorMessageField.setForeground(Color.RED);
         windowPanel.add(errorMessageField);
         currentHeight += BREAK_HEIGHT;
-        JButton startButton = initButton("Start", WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
+        JButton startButton = initButton("Començar", WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
         windowPanel.add(startButton);
     }
