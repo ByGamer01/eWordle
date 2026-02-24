@@ -121,7 +121,7 @@ public class Settings {
         windowPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         window.add(windowPanel);
         window.pack();
-        windowPanel.setBackground(new Color(238, 238, 238));
+        windowPanel.setBackground(new Color(57, 142, 62));
         windowPanel.setLayout(null);
 
         windowPanel.add(Settings.textInit("Configuració", "Comic Sans MS", JTextField.CENTER,
@@ -186,6 +186,10 @@ public class Settings {
         JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
         startButton.add(startButtonTxt);
+        JButton startButton = initButton(WIDTH_MARGIN, currentHeight,
+                CONTENT_WIDTH, CONTENT_HEIGHT, 70, event -> start());
+        startButton.setText("Start");
+        startButton.setHorizontalAlignment(SwingConstants.CENTER);
         windowPanel.add(startButton);
     }
 
@@ -282,6 +286,12 @@ public class Settings {
         textField.setOpaque(opaqueStatus);
         textField.setBorder(null);
         textField.setFont(new Font(fontName, fontStyle, fontSize));
+        if (editable) {
+            textField.setForeground(Color.black);
+            textField.setBackground(Color.WHITE);
+        } else {
+            textField.setForeground(Color.white);
+        }
         return textField;
     }
 
@@ -307,6 +317,8 @@ public class Settings {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.addActionListener(event);
         button.setFocusable(false);
+        button.setForeground(Color.white);
+        button.setBackground(new Color(43,115,43));
         return button;
     }
 
@@ -337,6 +349,7 @@ public class Settings {
         result.setCursor(new Cursor(Cursor.HAND_CURSOR));
         result.addItemListener(consumer::accept);
         result.setSelectedItem(hint + selectedItem);
+        result.setForeground(Color.black);
         return result;
     }
 

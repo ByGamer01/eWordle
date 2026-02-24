@@ -6,26 +6,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.*;
 
-/**
- * The {@code Game} class manages a game window that enables user to play the
- * game and shows the result window after
- * the game ends.
- *
- * <p>
- * If the user click the helper icon, the helper window will be shown. The
- * helper window is managed by current
- * {@code Game} instance and will be disposed when the game window closes (to
- * show the result window).
- *
- * <p>
- * Multiple instances of this class may be instantiated for various settings of
- * preferred word length of the word to be
- * guessed. But only one instance will exist or be held by {@link Game#instance}
- * at any time.
- *
- * @author Mingchun Zhuang
- * @version 1.0
- */
 public class Game {
     /**
      * A static variable storing the most recent instance instantiated, where older
@@ -114,6 +94,12 @@ public class Game {
      */
     private JTextArea helperOutput;
 
+    private JTextField timerField; // para mostrar el tiempo restante @ByGamer01
+
+    private int segundosRestantes; // para mostrar los segundos que le quedan al jugador @ByGamer01
+
+    private Timer countdownTimer;
+
     /**
      * This method launches the game window with settings given.
      *
@@ -144,7 +130,7 @@ public class Game {
         window.pack();
         windowPanel.setFocusable(false);
         windowPanel.setFocusTraversalKeysEnabled(false);
-        windowPanel.setBackground(new Color(238, 238, 238));
+        windowPanel.setBackground(new Color(57, 142, 62));
         windowPanel.setLayout(null);
 
         // Add hashtag board to the current window panel.
@@ -159,6 +145,33 @@ public class Game {
                 CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false);
         wordSourceBoard.setFocusable(false);
         windowPanel.add(wordSourceBoard);
+
+        // Espacio para el Timer que vamos a añadir @ByGamer01
+        timerField = Settings.textInit("Temps: ", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
+                CONTENT_MARGIN, CONTENT_MARGIN, // 5 minutos para el usuario
+                CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false); // Le ponemos los mismos parametros que el
+                                                                  // WordSourceBoard
+
+        timerField.setFocusable(false); // No se le puede clickar @ByGamer01
+        windowPanel.add(timerField); // Lo añadimos a la pantalla
+        segundosRestantes = 300; // 5 minutos = 300 segundos | Ya que sino el usuario automaticamente pierde ya
+                                 // que el timer por defecto se pone con 0 segundos @ByGamer01
+
+        countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
+            int min = segundosRestantes / 60;
+            int seg = segundosRestantes % 60;
+            timerField.setText(String.format("Temps: %d:%02d", min, seg));
+
+            if (segundosRestantes <= 0) {
+                countdownTimer.stop();
+                closeHelperWindow();
+                Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder, isOpenedHelper);
+                window.dispose(); // asi el timer se para siempre que termina la partida, ya sea por victoria, por
+                                  // intentos o por tiempo @ByGamer01
+            }
+            segundosRestantes--; // que se vayan quitando los segundos
+
+        });
 
         // Add message board to the window panel.
         messageBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
@@ -188,7 +201,8 @@ public class Game {
         // Add helper icon.
 
         JLabel helperTxt = new JLabel("?");
-        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN);
+        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN,
+                CONTENT_MARGIN);
         // Label del boton de ayuda @ByGamer01
         JButton helper = Settings.initButton(WINDOW_WIDTH - CONTENT_MARGIN,
                 WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN, 25,
@@ -199,6 +213,7 @@ public class Game {
 
         window.addKeyListener(newKeyboardListener(initWord, wordSource));
         hashtagBoard.addKeyListener(newKeyboardListener(initWord, wordSource));
+        countdownTimer.start(); // Iniciamos el timer
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
@@ -258,6 +273,8 @@ public class Game {
                             Results.getInstance().showResults(initWord, currentLine + 1, true,
                                     scoreByOrder, isOpenedHelper);
                             instance = null;
+                            countdownTimer.stop(); // Finalizamos el timer en la logica de victoria del usuario
+                                                   // @ByGamer01
                             window.dispose();
                         }
                         // Word guessed exists in word source of current difficulty level but incorrect.
@@ -266,7 +283,7 @@ public class Game {
                             for (int i = 0; i < wordLength; i++)
                                 if (currentWord.charAt(i) == initWord.charAt(i))
                                     setColor(fields.get(currentLine * wordLength + i), Color.white,
-                                            new Color(121, 167, 107));
+                                            new Color(121, 167, 107)); // rojo
                                 else
                                     charRemainIncorrect.add(initWord.charAt(i));
                             for (int i = 0; i < wordLength; i++)
@@ -288,6 +305,7 @@ public class Game {
                                 closeHelperWindow();
                                 Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder,
                                         isOpenedHelper);
+                                countdownTimer.stop(); // Lo pausamos aqui tambien en la parte de derrota @ByGamer01
                                 window.dispose();
                             }
                         } else
@@ -340,6 +358,7 @@ public class Game {
         isOpenedHelper = true;
         // Configure current helper window.
         final int helperWindowWidth = 600;
+
         final int helperWindowHeight = 800;
         helperWindow = new JFrame("Pistes");
         JPanel helperWindowPanel = new JPanel();
@@ -347,7 +366,7 @@ public class Game {
         helperWindow.setFocusable(true);
         helperWindowPanel.setFocusable(false);
         helperWindowPanel.setFocusTraversalKeysEnabled(false);
-        helperWindowPanel.setBackground(new Color(238, 238, 238));
+        helperWindowPanel.setBackground(new Color(57, 142, 62));
         helperWindowPanel.setLayout(null);
         helperWindow.setResizable(false);
         helperWindow.addWindowListener(new java.awt.event.WindowAdapter() {

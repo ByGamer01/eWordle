@@ -22,7 +22,7 @@ public class Results {
         /**
          * A static constant holding the width of current window.
          */
-        private static final int WINDOW_WIDTH = 600;
+        private static final int WINDOW_WIDTH = 800;
 
         /**
          * A static constant holding the height of current window.
@@ -118,7 +118,7 @@ public class Results {
                 windowPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
                 window.add(windowPanel);
                 window.pack();
-                windowPanel.setBackground(new Color(238, 238, 238));
+                windowPanel.setBackground(new Color(57, 142, 62));
                 windowPanel.setLayout(null);
 
                 // Add result board to the window.
@@ -162,11 +162,10 @@ public class Results {
                                 });
                 toSettings.add(toSettingsTxt);
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
+                toSettings.setText("Setting");
+                toSettings.setHorizontalAlignment(SwingConstants.CENTER);
+                toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
-                JLabel toRestartTxt = new JLabel("Reiniciar");
-                toRestartTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
-                                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
-
                 // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
                 // dos variables nuevas que solamente se usaran para
                 // esto, si las declararamos fuera tendriamos que pasarlas de parametro al
@@ -194,7 +193,8 @@ public class Results {
                                         }
                                         window.setVisible(false);
                                 });
-                toRestart.add(toRestartTxt); // el label dentro del boton
+                toRestart.setText("Reiniciar");
+                toRestart.setHorizontalAlignment(SwingConstants.CENTER);
 
                 toRestart.setToolTipText("Comença una nova partida");
                 windowPanel.add(toRestart);
@@ -233,6 +233,9 @@ public class Results {
                                 });
                 shareResult.add(shareResultTxt);
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
+                shareResult.setText("Share");
+                shareResult.setHorizontalAlignment(SwingConstants.CENTER);
+                shareResult.setToolTipText("Copy your results to clipboard.");
                 windowPanel.add(shareResult);
 
         }
@@ -273,6 +276,8 @@ public class Results {
                 window.setLocationRelativeTo(null);
                 resultBoard.setText(isSuccess ? "Èxit" : "Fallit");
                 Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
+                resultBoard.setText(isSuccess ? "Success" : "Failed");
+                Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(240,45,0),
                                 Color.white);
                 wordBoard.setText(initWord);
                 triesBoard.setText("Intents:" + (isOpenedHelper ? "*" : "") + tries);
