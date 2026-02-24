@@ -149,18 +149,11 @@ public class Results {
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
-                JLabel toSettingsTxt = new JLabel("Configuració"); // Label dentro del boton, para que el metodo del
-                                                              // initButton no sea para solamente Strings
-                // asi podremos cambiar el contenido del playgame() para poner el
-                // generateRandomWord
-                toSettingsTxt.setBounds(CONTENT_MARGIN, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2,
-                                CONTENT_HEIGHT);
                 JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                                         Settings.getInstance().setVisibleStatus(true);
                                         window.setVisible(false);
                                 });
-                toSettings.add(toSettingsTxt);
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
                 toSettings.setText("Setting");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
@@ -207,10 +200,6 @@ public class Results {
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
 
-                JLabel shareResultTxt = new JLabel("Compartir"); // Labels dentro del boton
-                shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las
-                                                                                                        // medidas del
-                                                                                                        // boton
                 JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                                         StringBuilder resultStr = new StringBuilder();
@@ -231,7 +220,6 @@ public class Results {
                                         clipboard.setContents(stringSelection, null);
                                         copiedReminder.setText("Copiat al porta-retalls.");
                                 });
-                shareResult.add(shareResultTxt);
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
                 shareResult.setText("Share");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
