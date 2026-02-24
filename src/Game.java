@@ -144,7 +144,7 @@ public class Game {
         window.pack();
         windowPanel.setFocusable(false);
         windowPanel.setFocusTraversalKeysEnabled(false);
-        windowPanel.setBackground(new Color(238, 238, 238));
+        windowPanel.setBackground(new Color(57, 142, 62));
         windowPanel.setLayout(null);
 
         // Add hashtag board to the current window panel.
@@ -340,6 +340,7 @@ public class Game {
         isOpenedHelper = true;
         // Configure current helper window.
         final int helperWindowWidth = 600;
+        
         final int helperWindowHeight = 800;
         helperWindow = new JFrame("Helper");
         JPanel helperWindowPanel = new JPanel();
@@ -347,7 +348,7 @@ public class Game {
         helperWindow.setFocusable(true);
         helperWindowPanel.setFocusable(false);
         helperWindowPanel.setFocusTraversalKeysEnabled(false);
-        helperWindowPanel.setBackground(new Color(238, 238, 238));
+        helperWindowPanel.setBackground(new Color(57, 142, 62));
         helperWindowPanel.setLayout(null);
         helperWindow.setResizable(false);
         helperWindow.addWindowListener(new java.awt.event.WindowAdapter() {
