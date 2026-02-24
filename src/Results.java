@@ -275,8 +275,6 @@ public class Results {
                 triesUsed = tries;
                 window.setLocationRelativeTo(null);
                 resultBoard.setText(isSuccess ? "Èxit" : "Fallit");
-                Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
-                resultBoard.setText(isSuccess ? "Success" : "Failed");
                 Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(240,45,0),
                                 Color.white);
                 wordBoard.setText(initWord);
