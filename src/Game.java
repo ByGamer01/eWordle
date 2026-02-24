@@ -147,16 +147,17 @@ public class Game {
         windowPanel.add(wordSourceBoard);
 
         // Espacio para el Timer que vamos a añadir @ByGamer01
-        timerField = Settings.textInit("Temps: 5:00", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
+        timerField = Settings.textInit("Temps: ", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
                 CONTENT_MARGIN, CONTENT_MARGIN, // 5 minutos para el usuario
                 CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false); // Le ponemos los mismos parametros que el
                                                                   // WordSourceBoard
 
         timerField.setFocusable(false); // No se le puede clickar @ByGamer01
         windowPanel.add(timerField); // Lo añadimos a la pantalla
+        segundosRestantes = 300; // 5 minutos = 300 segundos | Ya que sino el usuario automaticamente pierde ya
+                                 // que el timer por defecto se pone con 0 segundos @ByGamer01
 
         countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
-            segundosRestantes--; // que se vayan quitando los segundos
             int min = segundosRestantes / 60;
             int seg = segundosRestantes % 60;
             timerField.setText(String.format("Temps: %d:%02d", min, seg));
@@ -165,8 +166,11 @@ public class Game {
                 countdownTimer.stop();
                 closeHelperWindow();
                 Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder, isOpenedHelper);
-                window.dispose(); // asi el timer se para siempre que termina la partida, ya sea por victoria, por intentos o por tiempo @ByGamer01
+                window.dispose(); // asi el timer se para siempre que termina la partida, ya sea por victoria, por
+                                  // intentos o por tiempo @ByGamer01
             }
+            segundosRestantes--; // que se vayan quitando los segundos
+
         });
 
         // Add message board to the window panel.
@@ -354,7 +358,7 @@ public class Game {
         isOpenedHelper = true;
         // Configure current helper window.
         final int helperWindowWidth = 600;
-        
+
         final int helperWindowHeight = 800;
         helperWindow = new JFrame("Helper");
         JPanel helperWindowPanel = new JPanel();
