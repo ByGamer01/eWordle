@@ -17,7 +17,6 @@ public class Settings {
      * A static variable storing the only one instance instantiated.
      */
     private static Settings instance;
-    private static final int CONTENT_MARGIN = 50;
 
     /**
      * A static constant holding the width of current window.

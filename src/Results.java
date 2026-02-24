@@ -155,7 +155,9 @@ public class Results {
                                         window.setVisible(false);
                                 });
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
+                toSettings.setText("Setting");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
+                toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
                 // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
                 // dos variables nuevas que solamente se usaran para
@@ -219,7 +221,9 @@ public class Results {
                                         copiedReminder.setText("Copiat al porta-retalls.");
                                 });
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
+                shareResult.setText("Share");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
+                shareResult.setToolTipText("Copy your results to clipboard.");
                 windowPanel.add(shareResult);
 
         }
