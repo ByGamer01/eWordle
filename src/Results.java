@@ -22,7 +22,7 @@ public class Results {
         /**
          * A static constant holding the width of current window.
          */
-        private static final int WINDOW_WIDTH = 600;
+        private static final int WINDOW_WIDTH = 800;
 
         /**
          * A static constant holding the height of current window.
@@ -118,7 +118,7 @@ public class Results {
                 windowPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
                 window.add(windowPanel);
                 window.pack();
-                windowPanel.setBackground(new Color(238, 238, 238));
+                windowPanel.setBackground(new Color(57, 142, 62));
                 windowPanel.setLayout(null);
 
                 // Add result board to the window.
@@ -148,25 +148,15 @@ public class Results {
 
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
-
-                JLabel toSettingsTxt = new JLabel("Setting"); // Label dentro del boton, para que el metodo del
-                                                              // initButton no sea para solamente Strings
-                // asi podremos cambiar el contenido del playgame() para poner el
-                // generateRandomWord
-                toSettingsTxt.setBounds(CONTENT_MARGIN, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2,
-                                CONTENT_HEIGHT);
                 JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                                         Settings.getInstance().setVisibleStatus(true);
                                         window.setVisible(false);
                                 });
-                toSettings.add(toSettingsTxt);
+                toSettings.setText("Setting");
+                toSettings.setHorizontalAlignment(SwingConstants.CENTER);
                 toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
-                JLabel toRestartTxt = new JLabel("Reiniciar");
-                toRestartTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
-                                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
-
                 // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
                 // dos variables nuevas que solamente se usaran para
                 // esto, si las declararamos fuera tendriamos que pasarlas de parametro al
@@ -194,7 +184,8 @@ public class Results {
                                         }
                                         window.setVisible(false);
                                 });
-                toRestart.add(toRestartTxt); // el label dentro del boton
+                toRestart.setText("Reiniciar");
+                toRestart.setHorizontalAlignment(SwingConstants.CENTER);
 
                 toRestart.setToolTipText("Use current preferences with the same word");
                 windowPanel.add(toRestart);
@@ -207,10 +198,6 @@ public class Results {
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
 
-                JLabel shareResultTxt = new JLabel("Share"); // Labels dentro del boton
-                shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las
-                                                                                                        // medidas del
-                                                                                                        // boton
                 JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                                         StringBuilder resultStr = new StringBuilder();
@@ -231,7 +218,8 @@ public class Results {
                                         clipboard.setContents(stringSelection, null);
                                         copiedReminder.setText("Copied to clipboard.");
                                 });
-                shareResult.add(shareResultTxt);
+                shareResult.setText("Share");
+                shareResult.setHorizontalAlignment(SwingConstants.CENTER);
                 shareResult.setToolTipText("Copy your results to clipboard.");
                 windowPanel.add(shareResult);
 
@@ -272,7 +260,7 @@ public class Results {
                 triesUsed = tries;
                 window.setLocationRelativeTo(null);
                 resultBoard.setText(isSuccess ? "Success" : "Failed");
-                Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
+                Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(121, 124, 126),
                                 Color.white);
                 wordBoard.setText(initWord);
                 triesBoard.setText("Tries Used:" + (isOpenedHelper ? "*" : "") + tries);
