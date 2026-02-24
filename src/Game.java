@@ -123,7 +123,7 @@ public class Game {
      * @param hashtag    a String holding the hashtag of this game.
      */
     public void playGame(String wordSource, String initWord, String hashtag) {
-        System.out.println("playing Game from word source/jugant eWordle amb el tòpic " + wordSource
+        System.out.println("jugant eWordle amb el tòpic " + wordSource
                 + " sent la primera paraula " + initWord + " " +
                 hashtag);
         // Initialize related variables.
@@ -154,7 +154,7 @@ public class Game {
         windowPanel.add(hashtagBoard);
 
         // Add hashtag board to the current window panel.
-        JTextField wordSourceBoard = Settings.textInit("Current Word Source: " + wordSource,
+        JTextField wordSourceBoard = Settings.textInit("Diccionari actual: " + wordSource,
                 "Comic Sans MS", JTextField.CENTER, Font.BOLD, CONTENT_MARGIN, CONTENT_MARGIN / 2,
                 CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false);
         wordSourceBoard.setFocusable(false);
@@ -193,7 +193,7 @@ public class Game {
         JButton helper = Settings.initButton(WINDOW_WIDTH - CONTENT_MARGIN,
                 WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN, 25,
                 event -> createHelperWindow());
-        helper.setToolTipText("Launch Helper (a \"*\" mark will be displayed in the result)");
+        helper.setToolTipText("Obrir pistes (un asterisc \"*\" es mostrarà en el resultat)");
         helper.add(helperTxt);
         windowPanel.add(helper);
 
@@ -293,7 +293,7 @@ public class Game {
                         } else
                             messageBoard.setText("No es troba al llistat");
                     } else
-                        messageBoard.setText("Not enough length");
+                        messageBoard.setText("No és suficientment llarga");
                 }
                 // Typed letters.
                 else if ('A' <= c && c <= 'Z') {
@@ -303,7 +303,7 @@ public class Game {
                         field.setText("" + c);
                         currentWord += c;
                     } else
-                        messageBoard.setText("Time to click enter to confirm");
+                        messageBoard.setText("És moment de prémer \"intro\"");
                 }
                 // Typed backspace.
                 else if (c == '\b') {
@@ -313,11 +313,11 @@ public class Game {
                         setColor(field, Color.black, Color.white);
                         currentWord = currentWord.substring(0, currentWord.length() - 1);
                     } else
-                        messageBoard.setText("No more letters to delete");
+                        messageBoard.setText("No hi ha més caràcters a esborrar");
                 }
                 // Illegal input.
                 else
-                    messageBoard.setText("Only alphabetic letters will be accepted");
+                    messageBoard.setText("Només s'accepted caràcters de l'alfabet");
             }
         };
     }
@@ -341,7 +341,7 @@ public class Game {
         // Configure current helper window.
         final int helperWindowWidth = 600;
         final int helperWindowHeight = 800;
-        helperWindow = new JFrame("Helper");
+        helperWindow = new JFrame("Pistes");
         JPanel helperWindowPanel = new JPanel();
         helperWindowPanel.setPreferredSize(new Dimension(helperWindowWidth, helperWindowHeight));
         helperWindow.setFocusable(true);
@@ -362,8 +362,8 @@ public class Game {
 
         // Add word source board to the helper window.
         int currentHelperHeight = 0;
-        JTextField wordSourceBoard = Settings.textInit("Searching Word Source: " + Settings.getWordSource() +
-                ", Word Length: " + Settings.getInitWord().length(), "Comic Sans MS",
+        JTextField wordSourceBoard = Settings.textInit("Cercant diccionaris: " + Settings.getWordSource() +
+                ", Llargària de paraula: " + Settings.getInitWord().length(), "Comic Sans MS",
                 JTextField.CENTER, Font.PLAIN, CONTENT_MARGIN, currentHelperHeight, CONTENT_WIDTH, CONTENT_MARGIN,
                 15, false, false);
         wordSourceBoard.setFocusable(false);
@@ -377,7 +377,7 @@ public class Game {
 
         // Add search button.
         currentHelperHeight += CONTENT_MARGIN + CONTENT_MARGIN;
-        JLabel helperButtonTxt = new JLabel("Search");
+        JLabel helperButtonTxt = new JLabel("Cerca");
         helperButtonTxt.setBounds(CONTENT_MARGIN,
                 currentHelperHeight, CONTENT_WIDTH, CONTENT_MARGIN);
         JButton helperButton = Settings.initButton(CONTENT_MARGIN,
@@ -393,7 +393,7 @@ public class Game {
                 });
         helperButton.add(helperButtonTxt);
         helperButton.setToolTipText(
-                "Search candidates in current word source. GUESS Sample: *****(ESS*), G*E**(SU), *****(ESS*)[AB]");
+                "Cerca candidats en el diccionari actual. DAVID Exemple: *****(DAV*), D*V**(AI), *****(DAV*)[AB]");
         helperWindowPanel.add(helperButton);
 
         // Add helper output text field.
