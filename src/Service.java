@@ -122,9 +122,9 @@ public class Service {
         int difficulty = difficultyByWordSource.get(wordSource);
         int length = word.length();
         if (!indexByLength.containsKey(length) || !indexByLength.get(length).containsKey(word))
-            return "Not Found";
+            return "No trobat";
         if (indexByLength.get(length).get(word) > difficulty)
-            return "The word is too difficult";
+            return "La paraula és massa difícil";
         return "";
     }
 
@@ -154,7 +154,7 @@ public class Service {
                     return wordByDifficulty.get(i).get(randomIndex);
                 randomIndex -= size;
             }
-        return "Not Found";
+        return "No trobat";
     }
 
     /**
@@ -181,24 +181,24 @@ public class Service {
             if (ch == '(') {
                 isContainedRoundBracket = true;
                 if (isInsideRoundBracket || isInsideSquareBracket)
-                    return "Nested Brackets Not Supported$";
+                    return "Parèntesis aniuats no compatibles$";
                 else
                     isInsideRoundBracket = true;
             } else if (ch == ')') {
                 if (isInsideRoundBracket)
                     isInsideRoundBracket = false;
                 else
-                    return "Unpair Bracket Found$";
+                    return "Parèntesi sense parella trobat$";
             } else if (ch == '[') {
                 if (isInsideSquareBracket || isInsideRoundBracket)
-                    return "Nested Brackets Not Supported$";
+                    return "Claudàtors aniuats no compatibles$";
                 else
                     isInsideSquareBracket = true;
             } else if (ch == ']') {
                 if (isInsideSquareBracket)
                     isInsideSquareBracket = false;
                 else
-                    return "Unpair Bracket Found$";
+                    return "Claudàtor sense parella trobat$";
             } else if (Character.isAlphabetic(ch)) {
                 if (isInsideRoundBracket)
                     mustExistCount.put(ch, mustExistCount.getOrDefault(ch, 0) + 1);
@@ -210,17 +210,17 @@ public class Service {
                 if (isInsideRoundBracket)
                     eligibilityMatchAll = true;
                 else if (isInsideSquareBracket)
-                    return "* Inside [] Not Allowed$";
+                    return "* Dins [] No permès$";
                 else
                     patternString.append(ch);
             } else
-                return "Illegal Input$";
+                return "Input il·legal$";
         }
         final int initWordLength = Settings.getInitWord().length();
         if (patternString.length() != initWordLength)
-            return "Word Length too " + (patternString.length() < initWordLength ? "small" : "large") + "$";
+            return "Llargària de paraula massa " + (patternString.length() < initWordLength ? "curta" : "llarga") + "$";
         if (isInsideRoundBracket || isInsideSquareBracket)
-            return "Unpair Bracket Found$";
+            return "Claudàtor/Parèntesi sense parella trobat$";
         // Scan the database to filter out valid candidate words.
         if (!isContainedRoundBracket)
             eligibilityMatchAll = true;
@@ -266,6 +266,6 @@ public class Service {
                 }
             }
         }
-        return "$" + ("Found " + candidateCount + " result(s)" + (candidateCount > 0 ? ":" : ".")) + "\n" + results;
+        return "$" + ("S'ha(n) trobat " + candidateCount + " resultat(s)" + (candidateCount > 0 ? ":" : ".")) + "\n" + results;
     }
 }

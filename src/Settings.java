@@ -1,8 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.function.Consumer;
+import javax.swing.*;
 
 /**
  * The {@code Setting} class manages a setting window that enables user to
@@ -113,7 +113,7 @@ public class Settings {
         Settings.wordSourceOptions = wordSourceOptions;
 
         // Configure window settings.
-        window = new JFrame("Welcome - eWordle");
+        window = new JFrame("Benvingut - eWordle");
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,7 +124,7 @@ public class Settings {
         windowPanel.setBackground(new Color(57, 142, 62));
         windowPanel.setLayout(null);
 
-        windowPanel.add(Settings.textInit("Preferences", "Comic Sans MS", JTextField.CENTER,
+        windowPanel.add(Settings.textInit("Configuració", "Comic Sans MS", JTextField.CENTER,
                 Font.BOLD, WIDTH_MARGIN, BREAK_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
                 false));
 
@@ -143,24 +143,24 @@ public class Settings {
         };
         // Add two combos.
         int currentHeight = BREAK_HEIGHT + CONTENT_HEIGHT;
-        windowPanel.add(Settings.textInit("Word Length", "", JTextField.LEFT, Font.PLAIN,
+        windowPanel.add(Settings.textInit("Llargària de Paraula", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
-        windowPanel.add(initCombo("Word Length: ", wordLengthOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Word Length (Default: " + wordLength + " or last round preference)",
+        windowPanel.add(initCombo("Llargària de Paraula: ", wordLengthOptions, currentHeight + BREAK_HEIGHT,
+                comboEventConsumer, "Llargària de Paraula (Predeterminat: " + wordLength + " o la configuració del darrer joc.)",
                 wordLength + ""));
 
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
         windowPanel.add(Settings.textInit("Word Source", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
-        windowPanel.add(initCombo("Word Source: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Word Source (Default: " + wordSource + " or last round preference)",
+        windowPanel.add(initCombo("Llargària de Paraula: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
+                comboEventConsumer, "Llargària de Paraula (Predeterminat: " + wordSource + " o la configuració del darrer joc.)",
                 wordSource));
 
         // Add text field for the user to enter preferred Wordle word.
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
-        windowPanel.add(Settings.textInit("Wordle Word or Hashtag", "", JTextField.LEFT, Font.PLAIN,
+        windowPanel.add(Settings.textInit("Paraula o Hashtag", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
         initWordField = Settings.textInit("", "", JTextField.LEFT, Font.PLAIN, WIDTH_MARGIN,
@@ -168,7 +168,7 @@ public class Settings {
                 true);
         windowPanel.add(initWordField);
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
-        windowPanel.add(Settings.textInit("Hint: Leave empty to guess a random word.", "",
+        windowPanel.add(Settings.textInit("Pista: Deixau buit per seleccionar una paraula aleatòria.", "",
                 JTextField.LEFT, Font.PLAIN, WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 15,
                 false, false));
 
@@ -180,6 +180,12 @@ public class Settings {
         windowPanel.add(errorMessageField);
         currentHeight += BREAK_HEIGHT;
 
+        JLabel startButtonTxt = new JLabel("Començar"); // Nuevo label
+        startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight, CONTENT_WIDTH / 2,
+                CONTENT_HEIGHT);
+        JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
+                CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
+        startButton.add(startButtonTxt);
         JButton startButton = initButton(WIDTH_MARGIN, currentHeight,
                 CONTENT_WIDTH, CONTENT_HEIGHT, 70, event -> start());
         startButton.setText("Start");
@@ -389,8 +395,8 @@ public class Settings {
             } else
                 errorMessageField.setText(checkResult);
         } else
-            errorMessageField.setText("Error: The length of Wordle Word is too " +
-                    (text.length() < wordLength ? "small" : "large") + "!");
+            errorMessageField.setText("Error: La li¡ongitut de la paraula és massa " +
+                    (text.length() < wordLength ? "curta" : "llarga") + "!");
     }
 
     /**
@@ -455,7 +461,7 @@ public class Settings {
                 } while (integer > 0);
                 return "#" + reverseHashtag.reverse();
             }
-        return "Hashtag Error: word source not found";
+        return "Error de Hashtag: Paraula no trobada";
     }
 
     /**
@@ -480,7 +486,7 @@ public class Settings {
         final long radix = 29;
         long encoded = 0;
         if (hashtag.length() > 13)
-            return "Invalid hashtag input: length too large$$";
+            return "Hashtag invàlid: Llargària$$";
         // Decode raw base-hashtagLetterCount String to long.
         for (int i = 1; i < hashtag.length(); i++) {
             char ch = hashtag.charAt(i);
@@ -491,7 +497,7 @@ public class Settings {
                 encoded *= hashtagLetterCount;
                 encoded += ((int) ch) - ((int) 'A') + 10;
             } else // illegal letter
-                return "Invalid hashtag input: illegal letter$$";
+                return "Hashtag invàlid: Caràcter il·legal$$";
         }
         /* Retrieve details from decoded base-radix(29) integer. */
         // Retrieve word length.
@@ -500,7 +506,7 @@ public class Settings {
         // Retrieve word source.
         int hashtagWordSource = (int) (encoded % radix);
         if (!(0 < hashtagWordSource && hashtagWordSource <= Settings.wordSourceOptions.length))
-            return "Invalid hashtag input: illegal word source option$$";
+            return "Hashtag invàlid: Opció de diccionari il·legal$$";
         String hashtagWordSourceStr = Settings.wordSourceOptions[hashtagWordSource - 1];
         encoded /= radix;
         // Retrieve Wordle word.
@@ -511,13 +517,13 @@ public class Settings {
             if (0 <= currentDigit && currentDigit < 26)
                 hashtagWord.append((char) (currentDigit + (int) 'A'));
             else
-                return "Invalid hashtag input: illegal word letter$$";
+                return "Hashtag invàlid: Caràcter il·legal en la paraula$$";
         }
         // Check decoded result in Service.
         String hashtagCheckResult = Service.getInstance().checkExistence(hashtagWord.toString(), hashtagWordSourceStr);
         if (hashtagCheckResult.length() == 0) {
             return "$" + hashtagWord + "$" + hashtagWordSource;
         }
-        return "Invalid hashtag input: " + hashtagCheckResult + "$$";
+        return "Hashtag invàlid: " + hashtagCheckResult + "$$";
     }
 }
