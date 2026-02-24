@@ -181,7 +181,8 @@ public class Settings {
         currentHeight += BREAK_HEIGHT;
 
         JLabel startButtonTxt = new JLabel("Start"); // Nuevo label
-        startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4,currentHeight, CONTENT_WIDTH / 2, CONTENT_HEIGHT );
+        startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight, CONTENT_WIDTH / 2,
+                CONTENT_HEIGHT);
         JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
         startButton.add(startButtonTxt);
@@ -222,9 +223,14 @@ public class Settings {
         return Settings.initWord;
     }
 
-    // Setter para que podamos cambiar el valor del InitWord, cuando el usuario le de al boton de Restart o Reiniciar @ByGamer01
+    // Setter para que podamos cambiar el valor del InitWord, cuando el usuario le
+    // de al boton de Restart o Reiniciar @ByGamer01
     public static void setInitWord(String initWord) {
         Settings.initWord = initWord;
+    }
+    // Establecemos un nuevo hashtag debido a que generamos una nueva palabra.
+    public static void setCurrentHashtag(String hashtag) {
+        currentHashtag = hashtag;
     }
 
     /**
@@ -412,7 +418,9 @@ public class Settings {
      * @param hashtagWord       a String describing the Wordle word selected.
      * @return a String describing the decoded hashtag result.
      */
-    static private String hashtagEncoder(String hashtagWordSource, String hashtagWord) {
+
+    // Lo ponemos en publico para poder generar una nueva palabra en el Results.java cuando el usuario le de a volver a jugar
+    static public String hashtagEncoder(String hashtagWordSource, String hashtagWord) {
         // System.out.println("Encoding:"+hashtagWordSource+" "+hashtagWord);
         final long hashtagLetterCount = 26 + 10;
         final long radix = 29;

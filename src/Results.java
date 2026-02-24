@@ -97,112 +97,145 @@ public class Results {
          */
         private boolean isOpenedHelper = false;
 
-    /**
-     * The only constructor for class {@code Results}.
-     *
-     * <p>
-     * This constructor will initiate the window and complete the configuration. The window is hidden and waits for
-     * calling through {@link Results#showResults(String, int, boolean, ArrayList, boolean)}.
-     */
-    public Results() {
-        Results.instance = this;
+        /**
+         * The only constructor for class {@code Results}.
+         *
+         * <p>
+         * This constructor will initiate the window and complete the configuration. The
+         * window is hidden and waits for
+         * calling through
+         * {@link Results#showResults(String, int, boolean, ArrayList, boolean)}.
+         */
+        public Results() {
+                Results.instance = this;
 
-        // Configure window settings.
-        window = new JFrame("Results");
-        window.setLocationRelativeTo(null);
-        window.setResizable(false);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel windowPanel = new JPanel();
-        windowPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        window.add(windowPanel);
-        window.pack();
-        windowPanel.setBackground(new Color(238, 238, 238));
-        windowPanel.setLayout(null);
+                // Configure window settings.
+                window = new JFrame("Results");
+                window.setLocationRelativeTo(null);
+                window.setResizable(false);
+                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                JPanel windowPanel = new JPanel();
+                windowPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+                window.add(windowPanel);
+                window.pack();
+                windowPanel.setBackground(new Color(238, 238, 238));
+                windowPanel.setLayout(null);
 
-        // Add result board to the window.
-        int currentHeight = CONTENT_MARGIN;
-        resultBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
-                CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 80, false,
-                false);
-        windowPanel.add(resultBoard);
+                // Add result board to the window.
+                int currentHeight = CONTENT_MARGIN;
+                resultBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
+                                CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 80, false,
+                                false);
+                windowPanel.add(resultBoard);
 
-        // Add the hint board that displays "Guessing" and word board to the window.
-        currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
-        JTextField hintBoard = Settings.textInit("Guessing", "Comic Sans MS", JTextField.CENTER,
-                Font.PLAIN, CONTENT_MARGIN, currentHeight - CONTENT_MARGIN / 2, CONTENT_WIDTH, CONTENT_MARGIN,
-                30, false, false);
-        windowPanel.add(hintBoard);
-        wordBoard = Settings.textInit("", "", JTextField.CENTER, Font.PLAIN, CONTENT_MARGIN,
-                currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false, false);
-        windowPanel.add(wordBoard);
+                // Add the hint board that displays "Guessing" and word board to the window.
+                currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
+                JTextField hintBoard = Settings.textInit("Guessing", "Comic Sans MS", JTextField.CENTER,
+                                Font.PLAIN, CONTENT_MARGIN, currentHeight - CONTENT_MARGIN / 2, CONTENT_WIDTH,
+                                CONTENT_MARGIN,
+                                30, false, false);
+                windowPanel.add(hintBoard);
+                wordBoard = Settings.textInit("", "", JTextField.CENTER, Font.PLAIN, CONTENT_MARGIN,
+                                currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false, false);
+                windowPanel.add(wordBoard);
 
-        // Add the tries board to the window.
-        currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
-        triesBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.PLAIN,
-                CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
-                false);
-        windowPanel.add(triesBoard);
+                // Add the tries board to the window.
+                currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
+                triesBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.PLAIN,
+                                CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
+                                false);
+                windowPanel.add(triesBoard);
 
-        // Add two buttons to the window with event handlers respectively.
-        currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
+                // Add two buttons to the window with event handlers respectively.
+                currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
-        JLabel toSettingsTxt = new JLabel("Setting"); // Label dentro del boton, para que el metodo del initButton no sea para solamente Strings
-        // asi podremos cambiar el contenido del playgame() para poner el generateRandomWord
-        toSettingsTxt.setBounds(CONTENT_MARGIN, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
-        JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
-                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
-                    Settings.getInstance().setVisibleStatus(true);
-                    window.setVisible(false);
-                });
-        toSettings.add(toSettingsTxt);
-        toSettings.setToolTipText("Go back to Preferences page");
-        windowPanel.add(toSettings);
-        JLabel toRestartTxt= new JLabel("Reiniciar");
-        toSettingsTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
-        JButton toRestart = Settings.initButton(
-                CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
-                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
-                    Game.createInstance().playGame(Settings.getWordSource(), Settings.getInitWord(),
-                            Settings.getCurrentHashtag());
-                    window.setVisible(false);
-                });
-        toRestartTxt.add(toRestart);
-        toRestart.setToolTipText("Use current preferences with the same word");
-        windowPanel.add(toRestart);
+                JLabel toSettingsTxt = new JLabel("Setting"); // Label dentro del boton, para que el metodo del
+                                                              // initButton no sea para solamente Strings
+                // asi podremos cambiar el contenido del playgame() para poner el
+                // generateRandomWord
+                toSettingsTxt.setBounds(CONTENT_MARGIN, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2,
+                                CONTENT_HEIGHT);
+                JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
+                                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
+                                        Settings.getInstance().setVisibleStatus(true);
+                                        window.setVisible(false);
+                                });
+                toSettings.add(toSettingsTxt);
+                toSettings.setToolTipText("Go back to Preferences page");
+                windowPanel.add(toSettings);
+                JLabel toRestartTxt = new JLabel("Reiniciar");
+                toSettingsTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
+                                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
 
-        // Add share button with its event handler and its reminder to the window.
-        currentHeight += CONTENT_HEIGHT;
-        copiedReminder = Settings.textInit("", "Comic Sans MS", JTextField.CENTER,
-                Font.PLAIN, CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_MARGIN, 20,
-                false, false);
-        windowPanel.add(copiedReminder);
-        currentHeight += CONTENT_MARGIN;
+                // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
+                // dos variables nuevas que solamente se usaran para
+                // esto, si las declararamos fuera tendriamos que pasarlas de parametro al
+                // constructor de results, el caso
+                // esos dos atributos son solamente para que se pueda generar una nueva palabra
+                // debido a que el metodo generateRandomWord() necesita
+                // estos dos atributos
+                JButton toRestart = Settings.initButton(
+                                CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
+                                (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
 
-        JLabel shareResultTxt = new JLabel("Share"); // Labels dentro del boton
-        shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las medidas del boton
-        JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
-                CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
-                    StringBuilder resultStr = new StringBuilder();
-                    resultStr.append("eWordle ").append(isOpenedHelper ? "*" : "").append(isSuccess ? triesUsed : "X")
-                            .append("/").append(Settings.getInitWord().length() + 1).append("\n");
-                    resultStr.append(Settings.getCurrentHashtag()).append("\n").append("\n");
-                    final int initWordLength = Settings.getInitWord().length();
-                    for (int i = 0; i < scoreByOrder.size(); i++) {
-                        int score = scoreByOrder.get(i);
-                        resultStr.append(score == 0 ? "x" : (score == 1 ? "o" : "v"));
-                        if (i % initWordLength + 1 == initWordLength)
-                            resultStr.append("\n");
-                    }
-                    StringSelection stringSelection = new StringSelection(resultStr.toString());
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(stringSelection, null);
-                    copiedReminder.setText("Copied to clipboard.");
-                });
-        shareResult.add(shareResultTxt);
-        shareResult.setToolTipText("Copy your results to clipboard.");
-        windowPanel.add(shareResult);
+                                        // Generar una nueva palabra aleatoria
+                                        // obtenemos una nueva palabra del trimmed.csv
+                                        String wordSource = Settings.getWordSource();
 
-    }
+                                        // Obtenemos la dificultad de esa palabra o longitud
+                                        int wordLength = Settings.getInitWord().length();
+                                        String newWord = Service.getInstance().generateRandomWord(wordLength,
+                                                        wordSource);
+                                        if (!newWord.equals("Not Found")) {
+                                                Settings.setInitWord(newWord);
+                                                String newHashtag = Settings.hashtagEncoder(wordSource, newWord);
+                                                Settings.setCurrentHashtag(newHashtag);
+                                                Game.createInstance().playGame(wordSource, newWord, newHashtag);
+                                        }
+                                        window.setVisible(false);
+                                });
+                toRestart.add(toRestartTxt); // el label dentro del boton
+
+                toRestart.setToolTipText("Use current preferences with the same word");
+                windowPanel.add(toRestart);
+
+                // Add share button with its event handler and its reminder to the window.
+                currentHeight += CONTENT_HEIGHT;
+                copiedReminder = Settings.textInit("", "Comic Sans MS", JTextField.CENTER,
+                                Font.PLAIN, CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_MARGIN, 20,
+                                false, false);
+                windowPanel.add(copiedReminder);
+                currentHeight += CONTENT_MARGIN;
+
+                JLabel shareResultTxt = new JLabel("Share"); // Labels dentro del boton
+                shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las
+                                                                                                        // medidas del
+                                                                                                        // boton
+                JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
+                                CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
+                                        StringBuilder resultStr = new StringBuilder();
+                                        resultStr.append("eWordle ").append(isOpenedHelper ? "*" : "")
+                                                        .append(isSuccess ? triesUsed : "X")
+                                                        .append("/").append(Settings.getInitWord().length() + 1)
+                                                        .append("\n");
+                                        resultStr.append(Settings.getCurrentHashtag()).append("\n").append("\n");
+                                        final int initWordLength = Settings.getInitWord().length();
+                                        for (int i = 0; i < scoreByOrder.size(); i++) {
+                                                int score = scoreByOrder.get(i);
+                                                resultStr.append(score == 0 ? "x" : (score == 1 ? "o" : "v"));
+                                                if (i % initWordLength + 1 == initWordLength)
+                                                        resultStr.append("\n");
+                                        }
+                                        StringSelection stringSelection = new StringSelection(resultStr.toString());
+                                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                                        clipboard.setContents(stringSelection, null);
+                                        copiedReminder.setText("Copied to clipboard.");
+                                });
+                shareResult.add(shareResultTxt);
+                shareResult.setToolTipText("Copy your results to clipboard.");
+                windowPanel.add(shareResult);
+
+        }
 
         /**
          * Returns an instance of current class, where only one copy of instance will
