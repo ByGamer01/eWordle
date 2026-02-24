@@ -1,9 +1,9 @@
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
+import javax.swing.*;
 
 /**
  * The {@code Results} class manages a result window that enables user to see
@@ -110,7 +110,7 @@ public class Results {
                 Results.instance = this;
 
                 // Configure window settings.
-                window = new JFrame("Results");
+                window = new JFrame("Resultats");
                 window.setLocationRelativeTo(null);
                 window.setResizable(false);
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,7 +130,7 @@ public class Results {
 
                 // Add the hint board that displays "Guessing" and word board to the window.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
-                JTextField hintBoard = Settings.textInit("Guessing", "Comic Sans MS", JTextField.CENTER,
+                JTextField hintBoard = Settings.textInit("Endevinant", "Comic Sans MS", JTextField.CENTER,
                                 Font.PLAIN, CONTENT_MARGIN, currentHeight - CONTENT_MARGIN / 2, CONTENT_WIDTH,
                                 CONTENT_MARGIN,
                                 30, false, false);
@@ -149,7 +149,7 @@ public class Results {
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
-                JLabel toSettingsTxt = new JLabel("Setting"); // Label dentro del boton, para que el metodo del
+                JLabel toSettingsTxt = new JLabel("Configuració"); // Label dentro del boton, para que el metodo del
                                                               // initButton no sea para solamente Strings
                 // asi podremos cambiar el contenido del playgame() para poner el
                 // generateRandomWord
@@ -161,7 +161,7 @@ public class Results {
                                         window.setVisible(false);
                                 });
                 toSettings.add(toSettingsTxt);
-                toSettings.setToolTipText("Go back to Preferences page");
+                toSettings.setToolTipText("Tornar a la pàgina de configuració");
                 windowPanel.add(toSettings);
                 JLabel toRestartTxt = new JLabel("Reiniciar");
                 toRestartTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
@@ -186,7 +186,7 @@ public class Results {
                                         int wordLength = Settings.getInitWord().length();
                                         String newWord = Service.getInstance().generateRandomWord(wordLength,
                                                         wordSource);
-                                        if (!newWord.equals("Not Found")) {
+                                        if (!newWord.equals("No Trobat")) {
                                                 Settings.setInitWord(newWord);
                                                 String newHashtag = Settings.hashtagEncoder(wordSource, newWord);
                                                 Settings.setCurrentHashtag(newHashtag);
@@ -196,7 +196,7 @@ public class Results {
                                 });
                 toRestart.add(toRestartTxt); // el label dentro del boton
 
-                toRestart.setToolTipText("Use current preferences with the same word");
+                toRestart.setToolTipText("Comença una nova partida");
                 windowPanel.add(toRestart);
 
                 // Add share button with its event handler and its reminder to the window.
@@ -207,7 +207,7 @@ public class Results {
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
 
-                JLabel shareResultTxt = new JLabel("Share"); // Labels dentro del boton
+                JLabel shareResultTxt = new JLabel("Compartir"); // Labels dentro del boton
                 shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las
                                                                                                         // medidas del
                                                                                                         // boton
@@ -229,10 +229,10 @@ public class Results {
                                         StringSelection stringSelection = new StringSelection(resultStr.toString());
                                         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                                         clipboard.setContents(stringSelection, null);
-                                        copiedReminder.setText("Copied to clipboard.");
+                                        copiedReminder.setText("Copiat al porta-retalls.");
                                 });
                 shareResult.add(shareResultTxt);
-                shareResult.setToolTipText("Copy your results to clipboard.");
+                shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
                 windowPanel.add(shareResult);
 
         }
@@ -271,11 +271,11 @@ public class Results {
                 this.isOpenedHelper = isOpenedHelper;
                 triesUsed = tries;
                 window.setLocationRelativeTo(null);
-                resultBoard.setText(isSuccess ? "Success" : "Failed");
+                resultBoard.setText(isSuccess ? "Èxit" : "Fallit");
                 Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
                                 Color.white);
                 wordBoard.setText(initWord);
-                triesBoard.setText("Tries Used:" + (isOpenedHelper ? "*" : "") + tries);
+                triesBoard.setText("Intents:" + (isOpenedHelper ? "*" : "") + tries);
                 window.setVisible(true);
         }
 }
