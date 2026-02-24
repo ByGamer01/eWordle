@@ -267,7 +267,7 @@ public class Results {
                 Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(240,45,0),
                                 Color.white);
                 wordBoard.setText(initWord);
-                triesBoard.setText("Intents:" + (isOpenedHelper ? "*" : "") + tries);
+                triesBoard.setText("Intents:" + (isOpenedHelper ? " *" : " ") + tries); //l'asterisc indica si l'usuari ha obert el Helper o no.
                 window.setVisible(true);
         }
 }
