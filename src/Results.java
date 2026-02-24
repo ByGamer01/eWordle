@@ -149,16 +149,11 @@ public class Results {
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
-                                                              // initButton no sea para solamente Strings
-                // asi podremos cambiar el contenido del playgame() para poner el
-                // generateRandomWord
-                
                 JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                                         Settings.getInstance().setVisibleStatus(true);
                                         window.setVisible(false);
                                 });
-                toSettings.setText("Opcions");
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
                 windowPanel.add(toSettings);
@@ -202,6 +197,7 @@ public class Results {
                                 false, false);
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
+
                 JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                                         StringBuilder resultStr = new StringBuilder();
@@ -222,7 +218,6 @@ public class Results {
                                         clipboard.setContents(stringSelection, null);
                                         copiedReminder.setText("Copiat al porta-retalls.");
                                 });
-                shareResult.setText("Compartir");
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
                 windowPanel.add(shareResult);
