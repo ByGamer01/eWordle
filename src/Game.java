@@ -6,26 +6,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.*;
 
-/**
- * The {@code Game} class manages a game window that enables user to play the
- * game and shows the result window after
- * the game ends.
- *
- * <p>
- * If the user click the helper icon, the helper window will be shown. The
- * helper window is managed by current
- * {@code Game} instance and will be disposed when the game window closes (to
- * show the result window).
- *
- * <p>
- * Multiple instances of this class may be instantiated for various settings of
- * preferred word length of the word to be
- * guessed. But only one instance will exist or be held by {@link Game#instance}
- * at any time.
- *
- * @author Mingchun Zhuang
- * @version 1.0
- */
 public class Game {
     /**
      * A static variable storing the most recent instance instantiated, where older
@@ -114,6 +94,10 @@ public class Game {
      */
     private JTextArea helperOutput;
 
+    private JTextField timerField; // para mostrar el tiempo restante @ByGamer01
+
+    private int segundosRestantes; // para mostrar los segundos que le quedan al jugador @ByGamer01
+
     /**
      * This method launches the game window with settings given.
      *
@@ -160,6 +144,27 @@ public class Game {
         wordSourceBoard.setFocusable(false);
         windowPanel.add(wordSourceBoard);
 
+        // Espacio para el Timer que vamos a añadir @ByGamer01
+        timerField = Settings.textInit("Temps: 5:00", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
+                CONTENT_MARGIN, CONTENT_MARGIN, // 5 minutos para el usuario
+                CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false); // Le ponemos los mismos parametros que el
+                                                                  // WordSourceBoard
+
+        timerField.setFocusable(false); // No se le puede clickar @ByGamer01
+        windowPanel.add(timerField); // Lo añadimos a la pantalla
+
+        Timer countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
+            segundosRestantes--; // que se vayan quitando los segundos
+            int min = segundosRestantes / 60; 
+            int seg = segundosRestantes % 60;
+            timerField.setText(String.format("Temps: %d:%02d", min, seg));
+
+            if (segundosRestantes <= 0) {
+                ((Timer) e.getSource()).stop();
+                // Aquí: lógica de derrota (la misma que cuando se acaban los intentos)
+            }
+        });
+
         // Add message board to the window panel.
         messageBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
                 CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_WIDTH, CONTENT_HEIGHT, 20, false,
@@ -188,7 +193,8 @@ public class Game {
         // Add helper icon.
 
         JLabel helperTxt = new JLabel("?");
-        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN);
+        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN,
+                CONTENT_MARGIN);
         // Label del boton de ayuda @ByGamer01
         JButton helper = Settings.initButton(WINDOW_WIDTH - CONTENT_MARGIN,
                 WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN, 25,
