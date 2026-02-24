@@ -144,23 +144,43 @@ public class Settings {
         };
         // Add two combos.
         int currentHeight = BREAK_HEIGHT + CONTENT_HEIGHT;
+        // imagen del cide
+         /**
+          * codigo de imagen, aladi una carpeta de imagenes al ewordle donde se contiene el logo y servira para mas imagenes
+          */
+        String imagePath = "imagenes\\logo Cide.jpg";
+        java.io.File imageFile = new java.io.File(imagePath);
+        if (imageFile.exists()) {
+            ImageIcon logoIcon = new ImageIcon(imagePath);
+            Image logoImage = logoIcon.getImage();
+            Image scaledImage = logoImage.getScaledInstance(200, 130, Image.SCALE_SMOOTH);
+            JLabel logoLabel = new JLabel(new ImageIcon(scaledImage));
+            logoLabel.setBounds(WIDTH_MARGIN + 150, currentHeight, 200, 175);
+            windowPanel.add(logoLabel);
+            currentHeight += 60 + CONTENT_HEIGHT;
+        } else {
+            System.out.println("Archivo no encontrado: " + imageFile.getAbsolutePath());
+        }
+
         windowPanel.add(Settings.textInit("Llargària de Paraula", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
         windowPanel.add(initCombo("Llargària de Paraula: ", wordLengthOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Llargària de Paraula (Predeterminat: " + wordLength + " o la configuració del darrer joc.)",
+                comboEventConsumer,
+                "Llargària de Paraula (Predeterminat: " + wordLength + " o la configuració del darrer joc.)",
                 wordLength + ""));
 
-        currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
+        currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
         windowPanel.add(Settings.textInit("Word Source", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
         windowPanel.add(initCombo("Llargària de Paraula: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer, "Llargària de Paraula (Predeterminat: " + wordSource + " o la configuració del darrer joc.)",
+                comboEventConsumer,
+                "Llargària de Paraula (Predeterminat: " + wordSource + " o la configuració del darrer joc.)",
                 wordSource));
 
         // Add text field for the user to enter preferred Wordle word.
-        currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT;
+        currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
         windowPanel.add(Settings.textInit("Paraula o Hashtag", "", JTextField.LEFT, Font.PLAIN,
                 WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
                 false));
