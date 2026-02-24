@@ -260,7 +260,7 @@ public class Results {
                 triesUsed = tries;
                 window.setLocationRelativeTo(null);
                 resultBoard.setText(isSuccess ? "Success" : "Failed");
-                Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(121, 124, 126),
+                Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(240,45,0),
                                 Color.white);
                 wordBoard.setText(initWord);
                 triesBoard.setText("Tries Used:" + (isOpenedHelper ? "*" : "") + tries);
