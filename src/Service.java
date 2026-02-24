@@ -269,3 +269,4 @@ public class Service {
         return "$" + ("S'ha(n) trobat " + candidateCount + " resultat(s)" + (candidateCount > 0 ? ":" : ".")) + "\n" + results;
     }
 }
+//Botones

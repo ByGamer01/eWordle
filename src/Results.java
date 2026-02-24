@@ -271,3 +271,4 @@ public class Results {
                 window.setVisible(true);
         }
 }
+//Botones

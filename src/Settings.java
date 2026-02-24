@@ -525,3 +525,4 @@ public class Settings {
         return "Hashtag invàlid: " + hashtagCheckResult + "$$";
     }
 }
+//Botones
