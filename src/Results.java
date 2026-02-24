@@ -1,96 +1,101 @@
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
-import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.util.ArrayList;
 
 /**
- * The {@code Results} class manages a result window that enables user to see the result and choose whether to restart
+ * The {@code Results} class manages a result window that enables user to see
+ * the result and choose whether to restart
  * or go back to settings.
  *
  * @author Mingchun Zhuang
  * @version 1.0
  */
 public class Results {
-    /**
-     * A static variable storing the only one instance instantiated.
-     */
-    private static Results instance;
+        /**
+         * A static variable storing the only one instance instantiated.
+         */
+        private static Results instance;
 
-    /**
-     * A static constant holding the width of current window.
-     */
-    private static final int WINDOW_WIDTH = 600;
+        /**
+         * A static constant holding the width of current window.
+         */
+        private static final int WINDOW_WIDTH = 600;
 
-    /**
-     * A static constant holding the height of current window.
-     */
-    private static final int WINDOW_HEIGHT = 800;
+        /**
+         * A static constant holding the height of current window.
+         */
+        private static final int WINDOW_HEIGHT = 800;
 
-    /**
-     * A static constant holding the height of each content box.
-     */
-    private static final int CONTENT_HEIGHT = 100;
+        /**
+         * A static constant holding the height of each content box.
+         */
+        private static final int CONTENT_HEIGHT = 100;
 
-    /**
-     * A static constant holding the size of the interval of contents of current window.
-     */
-    private static final int CONTENT_MARGIN = 50;
+        /**
+         * A static constant holding the size of the interval of contents of current
+         * window.
+         */
+        private static final int CONTENT_MARGIN = 50;
 
-    /**
-     * A static constant holding the width of each content box.
-     */
-    private static final int CONTENT_WIDTH = WINDOW_WIDTH - CONTENT_MARGIN * 2;
+        /**
+         * A static constant holding the width of each content box.
+         */
+        private static final int CONTENT_WIDTH = WINDOW_WIDTH - CONTENT_MARGIN * 2;
 
-    /**
-     * A static {@code JFrame} holding the instance of current window.
-     */
-    private final JFrame window;
+        /**
+         * A static {@code JFrame} holding the instance of current window.
+         */
+        private final JFrame window;
 
-    /**
-     * A static {@code JTextField} holding the instance of text field that displays success or fail status.
-     */
-    private final JTextField resultBoard;
+        /**
+         * A static {@code JTextField} holding the instance of text field that displays
+         * success or fail status.
+         */
+        private final JTextField resultBoard;
 
-    /**
-     * A static {@code JTextField} holding the instance of text field that displays the word that the user tried to
-     * guess.
-     */
-    private final JTextField wordBoard;
+        /**
+         * A static {@code JTextField} holding the instance of text field that displays
+         * the word that the user tried to
+         * guess.
+         */
+        private final JTextField wordBoard;
 
-    /**
-     * A static {@code JTextField} holding the instance of text field that displays the tries that the user used to
-     * guess.
-     */
-    private final JTextField triesBoard;
+        /**
+         * A static {@code JTextField} holding the instance of text field that displays
+         * the tries that the user used to
+         * guess.
+         */
+        private final JTextField triesBoard;
 
-    /**
-     * A {@code JTextField} holding the instance of text field that displays copy status.
-     */
-    private final JTextField copiedReminder;
+        /**
+         * A {@code JTextField} holding the instance of text field that displays copy
+         * status.
+         */
+        private final JTextField copiedReminder;
 
-    /**
-     * A static {@code JTextField} holding the tries that the user used to guess.
-     */
-    private int triesUsed;
+        /**
+         * A static {@code JTextField} holding the tries that the user used to guess.
+         */
+        private int triesUsed;
 
-    /**
-     * An {@code ArrayList} holding score of each confirmed input, where 0 is for grey, 1 is for yellow, 2 is for green.
-     */
-    private ArrayList<Integer> scoreByOrder;
+        /**
+         * An {@code ArrayList} holding score of each confirmed input, where 0 is for
+         * grey, 1 is for yellow, 2 is for green.
+         */
+        private ArrayList<Integer> scoreByOrder;
 
-    /**
-     * A boolean holding the status that whether the user win.
-     */
-    private Boolean isSuccess;
+        /**
+         * A boolean holding the status that whether the user win.
+         */
+        private Boolean isSuccess;
 
-    /**
-     * A boolean holding the status that whether the user opened the helper window.
-     */
-    private boolean isOpenedHelper = false;
+        /**
+         * A boolean holding the status that whether the user opened the helper window.
+         */
+        private boolean isOpenedHelper = false;
 
     /**
      * The only constructor for class {@code Results}.
@@ -140,20 +145,28 @@ public class Results {
 
         // Add two buttons to the window with event handlers respectively.
         currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
-        JButton toSettings = Settings.initButton("Setting", CONTENT_MARGIN, currentHeight,
+
+        JLabel toSettingsTxt = new JLabel("Setting"); // Label dentro del boton, para que el metodo del initButton no sea para solamente Strings
+        // asi podremos cambiar el contenido del playgame() para poner el generateRandomWord
+        toSettingsTxt.setBounds(CONTENT_MARGIN, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
+        JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                     Settings.getInstance().setVisibleStatus(true);
                     window.setVisible(false);
                 });
+        toSettings.add(toSettingsTxt);
         toSettings.setToolTipText("Go back to Preferences page");
         windowPanel.add(toSettings);
-        JButton toRestart = Settings.initButton("Restart",
+        JLabel toRestartTxt= new JLabel("Reiniciar");
+        toSettingsTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight, (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
+        JButton toRestart = Settings.initButton(
                 CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                     Game.createInstance().playGame(Settings.getWordSource(), Settings.getInitWord(),
                             Settings.getCurrentHashtag());
                     window.setVisible(false);
                 });
+        toRestartTxt.add(toRestart);
         toRestart.setToolTipText("Use current preferences with the same word");
         windowPanel.add(toRestart);
 
@@ -164,7 +177,10 @@ public class Results {
                 false, false);
         windowPanel.add(copiedReminder);
         currentHeight += CONTENT_MARGIN;
-        JButton shareResult = Settings.initButton("Share", CONTENT_MARGIN, currentHeight,
+
+        JLabel shareResultTxt = new JLabel("Share"); // Labels dentro del boton
+        shareResultTxt.setBounds(CONTENT_MARGIN, currentHeight, CONTENT_WIDTH, CONTENT_HEIGHT); // Con las medidas del boton
+        JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                     StringBuilder resultStr = new StringBuilder();
                     resultStr.append("eWordle ").append(isOpenedHelper ? "*" : "").append(isSuccess ? triesUsed : "X")
@@ -182,47 +198,51 @@ public class Results {
                     clipboard.setContents(stringSelection, null);
                     copiedReminder.setText("Copied to clipboard.");
                 });
+        shareResult.add(shareResultTxt);
         shareResult.setToolTipText("Copy your results to clipboard.");
         windowPanel.add(shareResult);
 
     }
 
-    /**
-     * Returns an instance of current class, where only one copy of instance will exist.
-     *
-     * <p>
-     * If no instance found, a new one will be generated and stored. Otherwise, the stored one will be return.
-     *
-     * @return an instance of current class.
-     */
-    public static Results getInstance() {
-        if (Results.instance == null)
-            Results.instance = new Results();
-        return Results.instance;
-    }
+        /**
+         * Returns an instance of current class, where only one copy of instance will
+         * exist.
+         *
+         * <p>
+         * If no instance found, a new one will be generated and stored. Otherwise, the
+         * stored one will be return.
+         *
+         * @return an instance of current class.
+         */
+        public static Results getInstance() {
+                if (Results.instance == null)
+                        Results.instance = new Results();
+                return Results.instance;
+        }
 
-    /**
-     * This static method shows result window with given parameters.
-     *
-     * @param initWord       a String that the user tried to guess.
-     * @param tries          an int describing the number of tries used.
-     * @param isSuccess      a boolean describing the final status of the game.
-     * @param scoreByOrder   an {@code ArrayList} holding scored typed word history.
-     * @param isOpenedHelper a boolean holding the status that whether the user opened helper window.
-     */
-    public void showResults(String initWord, int tries, boolean isSuccess, ArrayList<Integer> scoreByOrder,
-                            boolean isOpenedHelper) {
-        this.scoreByOrder = scoreByOrder;
-        this.copiedReminder.setText("");
-        this.isSuccess = isSuccess;
-        this.isOpenedHelper = isOpenedHelper;
-        triesUsed = tries;
-        window.setLocationRelativeTo(null);
-        resultBoard.setText(isSuccess ? "Success" : "Failed");
-        Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
-                Color.white);
-        wordBoard.setText(initWord);
-        triesBoard.setText("Tries Used:" + (isOpenedHelper ? "*" : "") + tries);
-        window.setVisible(true);
-    }
+        /**
+         * This static method shows result window with given parameters.
+         *
+         * @param initWord       a String that the user tried to guess.
+         * @param tries          an int describing the number of tries used.
+         * @param isSuccess      a boolean describing the final status of the game.
+         * @param scoreByOrder   an {@code ArrayList} holding scored typed word history.
+         * @param isOpenedHelper a boolean holding the status that whether the user
+         *                       opened helper window.
+         */
+        public void showResults(String initWord, int tries, boolean isSuccess, ArrayList<Integer> scoreByOrder,
+                        boolean isOpenedHelper) {
+                this.scoreByOrder = scoreByOrder;
+                this.copiedReminder.setText("");
+                this.isSuccess = isSuccess;
+                this.isOpenedHelper = isOpenedHelper;
+                triesUsed = tries;
+                window.setLocationRelativeTo(null);
+                resultBoard.setText(isSuccess ? "Success" : "Failed");
+                Game.setColor(resultBoard, isSuccess ? new Color(121, 167, 107) : new Color(121, 124, 126),
+                                Color.white);
+                wordBoard.setText(initWord);
+                triesBoard.setText("Tries Used:" + (isOpenedHelper ? "*" : "") + tries);
+                window.setVisible(true);
+        }
 }
