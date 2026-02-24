@@ -164,7 +164,7 @@ public class Results {
                 toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
                 JLabel toRestartTxt = new JLabel("Reiniciar");
-                toSettingsTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
+                toRestartTxt.setBounds(CONTENT_MARGIN * 2 + (CONTENT_WIDTH - CONTENT_MARGIN) / 2, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT);
 
                 // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
