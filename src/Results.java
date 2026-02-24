@@ -149,15 +149,24 @@ public class Results {
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
+<<<<<<< HEAD
+=======
+                                                              // initButton no sea para solamente Strings
+                // asi podremos cambiar el contenido del playgame() para poner el
+                // generateRandomWord
+                
+>>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                                         Settings.getInstance().setVisibleStatus(true);
                                         window.setVisible(false);
                                 });
+<<<<<<< HEAD
+=======
+                toSettings.setText("Opcions");
+>>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
-                toSettings.setText("Setting");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
-                toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
                 // Generamos una nueva palabra al pulsar el botón de reiniciar, inicializamos
                 // dos variables nuevas que solamente se usaran para
@@ -199,7 +208,10 @@ public class Results {
                                 false, false);
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                                         StringBuilder resultStr = new StringBuilder();
@@ -220,10 +232,12 @@ public class Results {
                                         clipboard.setContents(stringSelection, null);
                                         copiedReminder.setText("Copiat al porta-retalls.");
                                 });
+<<<<<<< HEAD
+=======
+                shareResult.setText("Compartir");
+>>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
-                shareResult.setText("Share");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
-                shareResult.setToolTipText("Copy your results to clipboard.");
                 windowPanel.add(shareResult);
 
         }
@@ -266,7 +280,8 @@ public class Results {
                 Game.setColor(resultBoard, isSuccess ? new Color(67,255,10) : new Color(240,45,0),
                                 Color.white);
                 wordBoard.setText(initWord);
-                triesBoard.setText("Intents:" + (isOpenedHelper ? "*" : "") + tries);
+                triesBoard.setText("Intents:" + (isOpenedHelper ? " *" : " ") + tries); //l'asterisc indica si l'usuari ha obert el Helper o no.
                 window.setVisible(true);
         }
 }
+//Botones

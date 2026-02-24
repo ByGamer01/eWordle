@@ -17,6 +17,7 @@ public class Settings {
      * A static variable storing the only one instance instantiated.
      */
     private static Settings instance;
+    private static final int CONTENT_MARGIN = 50;
 
     /**
      * A static constant holding the width of current window.
@@ -200,13 +201,9 @@ public class Settings {
         windowPanel.add(errorMessageField);
         currentHeight += BREAK_HEIGHT;
 
-        JLabel startButtonTxt = new JLabel(""); // Nuevo label
-        startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight, CONTENT_WIDTH / 2,
-                CONTENT_HEIGHT);
         JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
-        startButton.add(startButtonTxt);
-        startButton.setText("començar");
+        startButton.setText("Començar");
         startButton.setHorizontalAlignment(SwingConstants.CENTER);
         windowPanel.add(startButton);
     }
@@ -545,3 +542,4 @@ public class Settings {
         return "Hashtag invàlid: " + hashtagCheckResult + "$$";
     }
 }
+//Botones
