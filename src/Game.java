@@ -98,6 +98,8 @@ public class Game {
 
     private int segundosRestantes; // para mostrar los segundos que le quedan al jugador @ByGamer01
 
+    private Timer countdownTimer;
+
     /**
      * This method launches the game window with settings given.
      *
@@ -153,15 +155,17 @@ public class Game {
         timerField.setFocusable(false); // No se le puede clickar @ByGamer01
         windowPanel.add(timerField); // Lo añadimos a la pantalla
 
-        Timer countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
+        countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
             segundosRestantes--; // que se vayan quitando los segundos
-            int min = segundosRestantes / 60; 
+            int min = segundosRestantes / 60;
             int seg = segundosRestantes % 60;
             timerField.setText(String.format("Temps: %d:%02d", min, seg));
 
             if (segundosRestantes <= 0) {
-                ((Timer) e.getSource()).stop();
-                // Aquí: lógica de derrota (la misma que cuando se acaban los intentos)
+                countdownTimer.stop();
+                closeHelperWindow();
+                Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder, isOpenedHelper);
+                window.dispose(); // asi el timer se para siempre que termina la partida, ya sea por victoria, por intentos o por tiempo @ByGamer01
             }
         });
 
@@ -205,6 +209,7 @@ public class Game {
 
         window.addKeyListener(newKeyboardListener(initWord, wordSource));
         hashtagBoard.addKeyListener(newKeyboardListener(initWord, wordSource));
+        countdownTimer.start(); // Iniciamos el timer
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
@@ -264,6 +269,8 @@ public class Game {
                             Results.getInstance().showResults(initWord, currentLine + 1, true,
                                     scoreByOrder, isOpenedHelper);
                             instance = null;
+                            countdownTimer.stop(); // Finalizamos el timer en la logica de victoria del usuario
+                                                   // @ByGamer01
                             window.dispose();
                         }
                         // Word guessed exists in word source of current difficulty level but incorrect.
@@ -272,7 +279,7 @@ public class Game {
                             for (int i = 0; i < wordLength; i++)
                                 if (currentWord.charAt(i) == initWord.charAt(i))
                                     setColor(fields.get(currentLine * wordLength + i), Color.white,
-                                            new Color(121, 167, 107));
+                                            new Color(121, 167, 107)); // rojo
                                 else
                                     charRemainIncorrect.add(initWord.charAt(i));
                             for (int i = 0; i < wordLength; i++)
@@ -294,6 +301,7 @@ public class Game {
                                 closeHelperWindow();
                                 Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder,
                                         isOpenedHelper);
+                                countdownTimer.stop(); // Lo pausamos aqui tambien en la parte de derrota @ByGamer01
                                 window.dispose();
                             }
                         } else
