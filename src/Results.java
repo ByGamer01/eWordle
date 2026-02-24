@@ -162,7 +162,6 @@ public class Results {
                                 });
                 toSettings.add(toSettingsTxt);
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
-                toSettings.setText("Setting");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
                 toSettings.setToolTipText("Go back to Preferences page");
                 windowPanel.add(toSettings);
@@ -233,7 +232,6 @@ public class Results {
                                 });
                 shareResult.add(shareResultTxt);
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
-                shareResult.setText("Share");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
                 shareResult.setToolTipText("Copy your results to clipboard.");
                 windowPanel.add(shareResult);

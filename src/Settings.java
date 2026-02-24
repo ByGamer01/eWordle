@@ -180,13 +180,13 @@ public class Settings {
         windowPanel.add(errorMessageField);
         currentHeight += BREAK_HEIGHT;
 
-        JLabel startButtonTxt = new JLabel("Començar"); // Nuevo label
+        JLabel startButtonTxt = new JLabel(""); // Nuevo label
         startButtonTxt.setBounds(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight, CONTENT_WIDTH / 2,
                 CONTENT_HEIGHT);
         JButton startButton = initButton(WINDOW_WIDTH / 2 - CONTENT_WIDTH / 4, currentHeight,
                 CONTENT_WIDTH / 2, CONTENT_HEIGHT, 70, event -> start());
         startButton.add(startButtonTxt);
-        startButton.setText("Start");
+        startButton.setText("Començar");
         startButton.setHorizontalAlignment(SwingConstants.CENTER);
         windowPanel.add(startButton);
     }
