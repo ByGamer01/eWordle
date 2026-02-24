@@ -12,3 +12,4 @@ with open(output_location, "w") as f:
     for it in sorted(difficulty.items()):
         f.write(str(it[0]) + ',' + str(it[1]) + '\n')
 
+# Este archivo realmente no lo necesitamos ahora mismo, pero lo dejo por si acaso. Es un script que recorta las palabras a una longitud entre 5 y 8 caracteres, y les asigna una dificultad según el archivo del que provienen. Luego guarda el resultado en un nuevo archivo CSV.
