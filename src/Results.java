@@ -149,22 +149,16 @@ public class Results {
                 // Add two buttons to the window with event handlers respectively.
                 currentHeight += CONTENT_HEIGHT + CONTENT_MARGIN;
 
-<<<<<<< HEAD
-=======
                                                               // initButton no sea para solamente Strings
                 // asi podremos cambiar el contenido del playgame() para poner el
                 // generateRandomWord
                 
->>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 JButton toSettings = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 (CONTENT_WIDTH - CONTENT_MARGIN) / 2, CONTENT_HEIGHT, 50, event -> {
                                         Settings.getInstance().setVisibleStatus(true);
                                         window.setVisible(false);
                                 });
-<<<<<<< HEAD
-=======
                 toSettings.setText("Opcions");
->>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 toSettings.setToolTipText("Tornar a la pàgina de configuració");
                 toSettings.setHorizontalAlignment(SwingConstants.CENTER);
                 windowPanel.add(toSettings);
@@ -208,10 +202,6 @@ public class Results {
                                 false, false);
                 windowPanel.add(copiedReminder);
                 currentHeight += CONTENT_MARGIN;
-<<<<<<< HEAD
-
-=======
->>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 JButton shareResult = Settings.initButton(CONTENT_MARGIN, currentHeight,
                                 CONTENT_WIDTH, CONTENT_HEIGHT, 50, event -> {
                                         StringBuilder resultStr = new StringBuilder();
@@ -232,10 +222,7 @@ public class Results {
                                         clipboard.setContents(stringSelection, null);
                                         copiedReminder.setText("Copiat al porta-retalls.");
                                 });
-<<<<<<< HEAD
-=======
                 shareResult.setText("Compartir");
->>>>>>> 344bae28b3fa5510b4329c4215148d875f1fade3
                 shareResult.setToolTipText("Copia els teus resultats al porta-retalls.");
                 shareResult.setHorizontalAlignment(SwingConstants.CENTER);
                 windowPanel.add(shareResult);

@@ -146,9 +146,9 @@ public class Settings {
         int currentHeight = BREAK_HEIGHT + CONTENT_HEIGHT;
         // imagen del cide
          /**
-          * codigo de imagen, aladi una carpeta de imagenes al ewordle donde se contiene el logo y servira para mas imagenes
+          * codigo de imagen, añadi una carpeta de imagenes al ewordle donde se contiene el logo y servira para mas imagenes @nicolasb19982-crypto
           */
-        String imagePath = "imagenes\\logo Cide.jpg";
+        String imagePath = "assets\\logo Cide.jpg";
         java.io.File imageFile = new java.io.File(imagePath);
         if (imageFile.exists()) {
             ImageIcon logoIcon = new ImageIcon(imagePath);
