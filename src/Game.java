@@ -6,26 +6,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.*;
 
-/**
- * The {@code Game} class manages a game window that enables user to play the
- * game and shows the result window after
- * the game ends.
- *
- * <p>
- * If the user click the helper icon, the helper window will be shown. The
- * helper window is managed by current
- * {@code Game} instance and will be disposed when the game window closes (to
- * show the result window).
- *
- * <p>
- * Multiple instances of this class may be instantiated for various settings of
- * preferred word length of the word to be
- * guessed. But only one instance will exist or be held by {@link Game#instance}
- * at any time.
- *
- * @author Mingchun Zhuang
- * @version 1.0
- */
 public class Game {
     /**
      * A static variable storing the most recent instance instantiated, where older
@@ -114,6 +94,12 @@ public class Game {
      */
     private JTextArea helperOutput;
 
+    private JTextField timerField; // para mostrar el tiempo restante @ByGamer01
+
+    private int segundosRestantes; // para mostrar los segundos que le quedan al jugador @ByGamer01
+
+    private Timer countdownTimer;
+
     /**
      * This method launches the game window with settings given.
      *
@@ -123,7 +109,7 @@ public class Game {
      * @param hashtag    a String holding the hashtag of this game.
      */
     public void playGame(String wordSource, String initWord, String hashtag) {
-        System.out.println("playing Game from word source/jugant eWordle amb el tòpic " + wordSource
+        System.out.println("jugant eWordle amb el tòpic " + wordSource
                 + " sent la primera paraula " + initWord + " " +
                 hashtag);
         // Initialize related variables.
@@ -154,11 +140,38 @@ public class Game {
         windowPanel.add(hashtagBoard);
 
         // Add hashtag board to the current window panel.
-        JTextField wordSourceBoard = Settings.textInit("Current Word Source: " + wordSource,
+        JTextField wordSourceBoard = Settings.textInit("Diccionari actual: " + wordSource,
                 "Comic Sans MS", JTextField.CENTER, Font.BOLD, CONTENT_MARGIN, CONTENT_MARGIN / 2,
                 CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false);
         wordSourceBoard.setFocusable(false);
         windowPanel.add(wordSourceBoard);
+
+        // Espacio para el Timer que vamos a añadir @ByGamer01
+        timerField = Settings.textInit("Temps: ", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
+                CONTENT_MARGIN, CONTENT_MARGIN, // 5 minutos para el usuario
+                CONTENT_WIDTH, CONTENT_MARGIN, 15, false, false); // Le ponemos los mismos parametros que el
+                                                                  // WordSourceBoard
+
+        timerField.setFocusable(false); // No se le puede clickar @ByGamer01
+        windowPanel.add(timerField); // Lo añadimos a la pantalla
+        segundosRestantes = 300; // 5 minutos = 300 segundos | Ya que sino el usuario automaticamente pierde ya
+                                 // que el timer por defecto se pone con 0 segundos @ByGamer01
+
+        countdownTimer = new Timer(1000, e -> { // Clase Timer @ByGamer01
+            int min = segundosRestantes / 60;
+            int seg = segundosRestantes % 60;
+            timerField.setText(String.format("Temps: %d:%02d", min, seg));
+
+            if (segundosRestantes <= 0) {
+                countdownTimer.stop();
+                closeHelperWindow();
+                Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder, isOpenedHelper);
+                window.dispose(); // asi el timer se para siempre que termina la partida, ya sea por victoria, por
+                                  // intentos o por tiempo @ByGamer01
+            }
+            segundosRestantes--; // que se vayan quitando los segundos
+
+        });
 
         // Add message board to the window panel.
         messageBoard = Settings.textInit("", "Comic Sans MS", JTextField.CENTER, Font.BOLD,
@@ -188,17 +201,19 @@ public class Game {
         // Add helper icon.
 
         JLabel helperTxt = new JLabel("?");
-        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN);
+        helperTxt.setBounds(WINDOW_WIDTH - CONTENT_MARGIN, WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN,
+                CONTENT_MARGIN);
         // Label del boton de ayuda @ByGamer01
         JButton helper = Settings.initButton(WINDOW_WIDTH - CONTENT_MARGIN,
                 WINDOW_HEIGHT - CONTENT_MARGIN, CONTENT_MARGIN, CONTENT_MARGIN, 25,
                 event -> createHelperWindow());
-        helper.setToolTipText("Launch Helper (a \"*\" mark will be displayed in the result)");
+        helper.setToolTipText("Obrir pistes (un asterisc \"*\" es mostrarà en el resultat)");
         helper.add(helperTxt);
         windowPanel.add(helper);
 
         window.addKeyListener(newKeyboardListener(initWord, wordSource));
         hashtagBoard.addKeyListener(newKeyboardListener(initWord, wordSource));
+        countdownTimer.start(); // Iniciamos el timer
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
@@ -258,6 +273,8 @@ public class Game {
                             Results.getInstance().showResults(initWord, currentLine + 1, true,
                                     scoreByOrder, isOpenedHelper);
                             instance = null;
+                            countdownTimer.stop(); // Finalizamos el timer en la logica de victoria del usuario
+                                                   // @ByGamer01
                             window.dispose();
                         }
                         // Word guessed exists in word source of current difficulty level but incorrect.
@@ -266,7 +283,7 @@ public class Game {
                             for (int i = 0; i < wordLength; i++)
                                 if (currentWord.charAt(i) == initWord.charAt(i))
                                     setColor(fields.get(currentLine * wordLength + i), Color.white,
-                                            new Color(121, 167, 107));
+                                            new Color(121, 167, 107)); // rojo
                                 else
                                     charRemainIncorrect.add(initWord.charAt(i));
                             for (int i = 0; i < wordLength; i++)
@@ -288,12 +305,13 @@ public class Game {
                                 closeHelperWindow();
                                 Results.getInstance().showResults(initWord, currentLine, false, scoreByOrder,
                                         isOpenedHelper);
+                                countdownTimer.stop(); // Lo pausamos aqui tambien en la parte de derrota @ByGamer01
                                 window.dispose();
                             }
                         } else
                             messageBoard.setText("No es troba al llistat");
                     } else
-                        messageBoard.setText("Not enough length");
+                        messageBoard.setText("No és suficientment llarga");
                 }
                 // Typed letters.
                 else if ('A' <= c && c <= 'Z') {
@@ -303,7 +321,7 @@ public class Game {
                         field.setText("" + c);
                         currentWord += c;
                     } else
-                        messageBoard.setText("Time to click enter to confirm");
+                        messageBoard.setText("És moment de prémer \"intro\"");
                 }
                 // Typed backspace.
                 else if (c == '\b') {
@@ -313,11 +331,11 @@ public class Game {
                         setColor(field, Color.black, Color.white);
                         currentWord = currentWord.substring(0, currentWord.length() - 1);
                     } else
-                        messageBoard.setText("No more letters to delete");
+                        messageBoard.setText("No hi ha més caràcters a esborrar");
                 }
                 // Illegal input.
                 else
-                    messageBoard.setText("Only alphabetic letters will be accepted");
+                    messageBoard.setText("Només s'accepted caràcters de l'alfabet");
             }
         };
     }
@@ -340,9 +358,9 @@ public class Game {
         isOpenedHelper = true;
         // Configure current helper window.
         final int helperWindowWidth = 600;
-        
+
         final int helperWindowHeight = 800;
-        helperWindow = new JFrame("Helper");
+        helperWindow = new JFrame("Pistes");
         JPanel helperWindowPanel = new JPanel();
         helperWindowPanel.setPreferredSize(new Dimension(helperWindowWidth, helperWindowHeight));
         helperWindow.setFocusable(true);
@@ -363,8 +381,8 @@ public class Game {
 
         // Add word source board to the helper window.
         int currentHelperHeight = 0;
-        JTextField wordSourceBoard = Settings.textInit("Searching Word Source: " + Settings.getWordSource() +
-                ", Word Length: " + Settings.getInitWord().length(), "Comic Sans MS",
+        JTextField wordSourceBoard = Settings.textInit("Cercant diccionaris: " + Settings.getWordSource() +
+                ", Llargària de paraula: " + Settings.getInitWord().length(), "Comic Sans MS",
                 JTextField.CENTER, Font.PLAIN, CONTENT_MARGIN, currentHelperHeight, CONTENT_WIDTH, CONTENT_MARGIN,
                 15, false, false);
         wordSourceBoard.setFocusable(false);
@@ -378,7 +396,7 @@ public class Game {
 
         // Add search button.
         currentHelperHeight += CONTENT_MARGIN + CONTENT_MARGIN;
-        JLabel helperButtonTxt = new JLabel("Search");
+        JLabel helperButtonTxt = new JLabel("Cerca");
         helperButtonTxt.setBounds(CONTENT_MARGIN,
                 currentHelperHeight, CONTENT_WIDTH, CONTENT_MARGIN);
         JButton helperButton = Settings.initButton(CONTENT_MARGIN,
@@ -394,7 +412,7 @@ public class Game {
                 });
         helperButton.add(helperButtonTxt);
         helperButton.setToolTipText(
-                "Search candidates in current word source. GUESS Sample: *****(ESS*), G*E**(SU), *****(ESS*)[AB]");
+                "Cerca candidats en el diccionari actual. DAVID Exemple: *****(DAV*), D*V**(AI), *****(DAV*)[AB]");
         helperWindowPanel.add(helperButton);
 
         // Add helper output text field.
@@ -411,3 +429,4 @@ public class Game {
         helperWindow.setVisible(true);
     }
 }
+//Botones

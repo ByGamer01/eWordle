@@ -39,3 +39,4 @@ public class eWordle {
         Settings.getInstance().setVisibleStatus(true);
     }
 }
+//WORDLE//Botones
