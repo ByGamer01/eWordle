@@ -120,7 +120,7 @@ public class Settings {
         window.pack();
         windowPanel.setBackground(new Color(57, 142, 62));
         windowPanel.setLayout(null);
-
+        
         windowPanel.add(Settings.textInit("Configuració", "Comic Sans MS", JTextField.CENTER,
                 Font.BOLD, WIDTH_MARGIN, BREAK_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
                 false));
@@ -129,14 +129,14 @@ public class Settings {
          /**
           * codigo de imagen, aladi una carpeta de imagenes al ewordle donde se contiene el logo y servira para mas imagenes
           */
-        String imagePath = "imagenes/logo-Cide.jpg";
+        String imagePath = "imagenes/logo-Cide.png";
         java.io.File imageFile = new java.io.File(imagePath);
         if (imageFile.exists()) {
             ImageIcon logoIcon = new ImageIcon(imagePath);
             Image logoImage = logoIcon.getImage();
             Image scaledImage = logoImage.getScaledInstance(200, 130, Image.SCALE_SMOOTH);
             JLabel logoLabel = new JLabel(new ImageIcon(scaledImage));
-            logoLabel.setBounds(WIDTH_MARGIN + 150, currentHeight, 200, 175);
+            logoLabel.setBounds(WIDTH_MARGIN + 50, currentHeight, 400, 250);
             windowPanel.add(logoLabel);
             currentHeight += 60 + CONTENT_HEIGHT;
         } else {
