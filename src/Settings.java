@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.util.function.Consumer;
 import javax.swing.*;
 
 /**
@@ -17,8 +15,6 @@ public class Settings {
      * A static variable storing the only one instance instantiated.
      */
     private static Settings instance;
-    private static final int CONTENT_MARGIN = 50;
-
     /**
      * A static constant holding the width of current window.
      */
@@ -101,12 +97,12 @@ public class Settings {
      * @param wordLength        an int describing the length of words to be guessed.
      * @param wordSource        a String describing the specific source type,
      *                          included in <var>wordSourceOptions</var>.
-     * @param wordLengthOptions a String array containing the word lengths to be
+     * @param wordlengths a String array containing the word lengths to be
      *                          chosen.
      * @param wordSourceOptions a String array containing the word sources to be
      *                          chosen.
      */
-    public void configSettings(int wordLength, String wordSource, String[] wordLengthOptions,
+    public void configSettings(int wordLength, String wordSource, String wordlengths,
             String[] wordSourceOptions) {
         Settings.instance = this;
         Settings.wordLength = wordLength;
@@ -128,27 +124,12 @@ public class Settings {
         windowPanel.add(Settings.textInit("Configuració", "Comic Sans MS", JTextField.CENTER,
                 Font.BOLD, WIDTH_MARGIN, BREAK_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
                 false));
-
-        // two following Combos initialized with identical Event Consumer, which is
-        // distinguished in Consumer via char
-        // at hint[5]: 'L' or 'S'.
-        Consumer<ItemEvent> comboEventConsumer = event -> {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = (String) event.getItem();
-                char c = selectedItem.charAt(5);
-                if (c == 'L')
-                    Settings.wordLength = Integer.parseInt(selectedItem.substring(13));
-                else if (c == 'S')
-                    Settings.wordSource = selectedItem.substring(13);
-            }
-        };
-        // Add two combos.
         int currentHeight = BREAK_HEIGHT + CONTENT_HEIGHT;
         // imagen del cide
          /**
           * codigo de imagen, aladi una carpeta de imagenes al ewordle donde se contiene el logo y servira para mas imagenes
           */
-        String imagePath = "imagenes\\logo Cide.jpg";
+        String imagePath = "../logo-Cide.jpg";
         java.io.File imageFile = new java.io.File(imagePath);
         if (imageFile.exists()) {
             ImageIcon logoIcon = new ImageIcon(imagePath);
@@ -161,24 +142,6 @@ public class Settings {
         } else {
             System.out.println("Archivo no encontrado: " + imageFile.getAbsolutePath());
         }
-
-        windowPanel.add(Settings.textInit("Llargària de Paraula", "", JTextField.LEFT, Font.PLAIN,
-                WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
-                false));
-        windowPanel.add(initCombo("Llargària de Paraula: ", wordLengthOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer,
-                "Llargària de Paraula (Predeterminat: " + wordLength + " o la configuració del darrer joc.)",
-                wordLength + ""));
-
-        currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
-        windowPanel.add(Settings.textInit("Word Source", "", JTextField.LEFT, Font.PLAIN,
-                WIDTH_MARGIN, currentHeight, CONTENT_WIDTH, BREAK_HEIGHT, 30, false,
-                false));
-        windowPanel.add(initCombo("Llargària de Paraula: ", wordSourceOptions, currentHeight + BREAK_HEIGHT,
-                comboEventConsumer,
-                "Llargària de Paraula (Predeterminat: " + wordSource + " o la configuració del darrer joc.)",
-                wordSource));
-
         // Add text field for the user to enter preferred Wordle word.
         currentHeight += BREAK_HEIGHT + CONTENT_HEIGHT / 3;
         windowPanel.add(Settings.textInit("Paraula o Hashtag", "", JTextField.LEFT, Font.PLAIN,
@@ -344,7 +307,7 @@ public class Settings {
      * This method returns a configured combo to the window.
      *
      * @param hint         a String describing the hint to add before each content.
-     * @param contents     a String array describing contents to be displayed in the
+     * @param wordlengths     a String array describing contents to be displayed in the
      *                     combo.
      * @param height       an int describing the new vertical or
      *                     {@code y}-coordinate of the combo.
@@ -356,20 +319,6 @@ public class Settings {
      *                     combo.
      * @return a configured {@code JComboBox<String>}.
      */
-    private JComboBox<String> initCombo(String hint, String[] contents, int height, Consumer<ItemEvent> consumer,
-            String toolTip, String selectedItem) {
-        contents = contents.clone();
-        for (int i = 0; i < contents.length; i++)
-            contents[i] = hint + contents[i];
-        JComboBox<String> result = new JComboBox<>(contents);
-        result.setBounds(WIDTH_MARGIN, height, CONTENT_WIDTH, CONTENT_HEIGHT / 3);
-        result.setToolTipText(toolTip);
-        result.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        result.addItemListener(consumer::accept);
-        result.setSelectedItem(hint + selectedItem);
-        result.setForeground(Color.black);
-        return result;
-    }
 
     /**
      * This method checks the word typed by the user and create a new {@code Game}

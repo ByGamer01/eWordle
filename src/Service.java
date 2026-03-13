@@ -56,12 +56,12 @@ public class Service {
      * returning String will contain error details.
      *
      * @param wordSources a String array containing word sources ordered by difficulty increasingly.
-     * @param wordLengths a String array containing word lengths ordered increasingly.
+     * @param wordlengths a String array containing word lengths ordered increasingly.
      * @return a string representation of initialization results.
      */
-    public String initService(String[] wordSources, String[] wordLengths) {
-        final int minLength = Integer.parseInt(wordLengths[0]);
-        final int maxLength = Integer.parseInt(wordLengths[wordLengths.length - 1]);
+    public String initService(String[] wordSources, String wordlengths) {
+        final int minLength = Integer.parseInt(wordlengths);
+        final int maxLength = Integer.parseInt(wordlengths);
         difficultyByWordSource = new HashMap<>();
         for (int i = 0; i < wordSources.length; i++)
             difficultyByWordSource.put(wordSources[i], i + 1);
