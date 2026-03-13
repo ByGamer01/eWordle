@@ -124,6 +124,7 @@ public class Settings {
         windowPanel.add(Settings.textInit("Configuració", "Comic Sans MS", JTextField.CENTER,
                 Font.BOLD, WIDTH_MARGIN, BREAK_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT, 60, false,
                 false));
+                
         int currentHeight = BREAK_HEIGHT + CONTENT_HEIGHT;
         // imagen del cide
          /**
